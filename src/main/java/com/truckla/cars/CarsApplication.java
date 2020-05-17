@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class CarsApplication {
 
-	// Commit this
+
 	public static void main(String[] args) {
 		SpringApplication.run(CarsApplication.class, args);
 	}
