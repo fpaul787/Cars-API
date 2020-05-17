@@ -1,6 +1,7 @@
 stages:
   - build
 
+# Build
 build:
   stage: build
   image: openjdk:12-alpine

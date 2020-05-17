@@ -16,6 +16,7 @@ public class Car {
     String model;
     int build;
 
+    // default constructor
     public Car() {
     }
 
@@ -26,6 +27,7 @@ public class Car {
         this.build = build;
     }
 
+    // getters and setters
     public Long getId() {
         return id;
     }
