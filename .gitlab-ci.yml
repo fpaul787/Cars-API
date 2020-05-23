@@ -6,6 +6,7 @@ stages:
   - build
   - test
   - deploy
+  - post deploy
 
 code quality:
   stage: test
@@ -56,6 +57,7 @@ unit tests:
 
 
       # deploy job
+
 deploy:
   stage: deploy
   image:
@@ -72,3 +74,18 @@ deploy:
     - sleep 50 # update takes time, so we need to sleep
     - curl http://$CNAME/actuator/info | grep $CI_PIPELINE_IID
     - curl http://$CNAME/actuator/health | grep "UP"
+
+api testing:
+  stage: post deploy
+  image:
+    name: vdespa/newman
+    entrypoint: [""]
+  script:
+    - newman --version
+    - newman run "Cars API.postman_collection.json" --environment CarsApi-env.postman_environment.json --reporters cli, junit htmlextra --reporter-htmlextra-export "newman/report.html" --reporter-junit-export "newman/report.xml"
+  artifacts:
+    when: always
+    paths:
+      - newman
+    reports:
+      junit: newman/report.xml
