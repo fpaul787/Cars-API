@@ -50,7 +50,7 @@ unit tests:
   artifacts:
     when: always
     paths:
-      - /build/reports/test # html report will be available
+      - build/reports/test # html report will be available
     reports:
       junit: build/test-results/test/*.xml
 
