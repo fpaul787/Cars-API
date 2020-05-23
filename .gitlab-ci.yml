@@ -42,7 +42,20 @@ code quality:
     paths:
       - build/reports/pmd
 
-# deploy job
+unit tests:
+  state: test
+  image: openjdk:12-alpine
+  script:
+    - ./gradlew test
+  artifacts:
+    when: always
+    paths:
+      - /build/reports/test # html report will be available
+    reports:
+      junit: build/test-results/test/*.xml
+
+
+      # deploy job
 deploy:
   stage: deploy
   image:
