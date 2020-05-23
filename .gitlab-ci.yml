@@ -7,6 +7,16 @@ stages:
   - test
   - deploy
 
+code quality:
+  stage: test
+  image: openjdk:12-alpine
+  script:
+    - ./gradlew pmdMain pmdTest
+  artifacts:
+    when: always # this artifact will be saved always (success or fail)
+    paths:
+      - build/reports/pmd
+
 # Build
 build:
   stage: build
@@ -31,16 +41,6 @@ smoke test:
     - java -jar ./build/libs/$ARTIFACT_NAME  & # use jar file to run application
     - sleep 30 # time to run application, not best to put in pipeline cause it will run slower
     - curl http://localhost:5000/actuator/health | grep "UP"
-
-code quality:
-  stage: test
-  image: openjdk:12-alpine
-  script:
-    - ./gradlew pmdMain pmdTest
-  artifacts:
-    when: always # this artifact will be saved always (success or fail)
-    paths:
-      - build/reports/pmd
 
 unit tests:
   stage: test
