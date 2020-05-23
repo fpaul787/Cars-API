@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - deploy
 
 # Build
 build:
@@ -21,3 +22,12 @@ smoke test:
     - java -jar ./build/libs/cars-api.jar  & # use jar file to run application
     - sleep 30 # time to run application, not best to put in pipeline cause it will run slower
     - curl http://localhost:5000/actuator/health | grep "UP"
+
+deploy:
+  stage: deploy
+  image:
+    name: banst/awscli
+    entrypoint: [""]
+  script:
+    - aws configure set region us-east-1
+    - aws s3 cp ./build/libs/cars-api.jar s3://$S3_BUCKET/cars-api/jar
