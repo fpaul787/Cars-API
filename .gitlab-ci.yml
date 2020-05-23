@@ -43,7 +43,7 @@ code quality:
       - build/reports/pmd
 
 unit tests:
-  state: test
+  stage:test test
   image: openjdk:12-alpine
   script:
     - ./gradlew test
