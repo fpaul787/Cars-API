@@ -32,6 +32,16 @@ smoke test:
     - sleep 30 # time to run application, not best to put in pipeline cause it will run slower
     - curl http://localhost:5000/actuator/health | grep "UP"
 
+code quality:
+  stage: test
+  image: openjdk:12-alpine
+  script:
+    - ./gradlew pmdMain pmdTest
+  artifacts:
+    when: always # this artifact will be saved always (success or fail)
+    paths:
+      - build/reports/pmd
+
 # deploy job
 deploy:
   stage: deploy
